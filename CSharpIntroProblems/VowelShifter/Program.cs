@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 /*
  * Vowel Shifter
@@ -39,25 +40,32 @@ namespace VowelShifter
             // In C#, strings can be accessed similar to arrays
             Console.WriteLine($"Before: {input}");
 
+            string vowels = "aeiou";
+            string replace = "eioua";
+
             string output = "";
             for (int i = 0; i < input.Length; i++)
             {
-                // Let's grab one character from the input at index i
+
                 char current = input[i];
-                
-                // Turn any 'e' to a '3'
-                if (current == 'e')
+
+                //if current character exists in vowel list, begin insert
+                if (vowels.IndexOf(Char.ToLower(current)) > -1)
                 {
-                    current = '3';
-                }
-                
-                // Make every other letter uppercase
-                if (i % 2 == 0)
+                    int index = vowels.IndexOf(Char.ToLower(current));
+                    //if not originally lowercase, insert a capital letter
+                    if (Char.ToLower(current).ToString() != current.ToString())
+                    {
+                        output += Char.ToUpper(replace[index]);
+                    } else //insert original letter
+                    {
+                        output += replace[index];
+                    }
+                } else //otherwise just return original letter
                 {
-                    current = Char.ToUpper(current);
+                    output += current;
                 }
-                
-                output += current;
+
             }
             
             Console.WriteLine($"After: {output}");

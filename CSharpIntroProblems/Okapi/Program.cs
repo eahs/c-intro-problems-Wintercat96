@@ -31,15 +31,41 @@ namespace Okapi
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter two numbers: ");
-            
-            // This is Linq.  Linq can make your life pretty easy
-            var nums = Console.ReadLine() // Read a string from the user
-                .Split(" ") // Split the text input into an array of strings
-                .Select(n => Convert.ToInt32(n)) // Select each string and convert it to an integer
-                .ToList(); // Now turn the integer collection into a List
-            
-            Console.WriteLine($"You entered {nums[0]} and {nums[1]}");
+            for (int r = 0; r < 3; r++)
+            {
+                Console.Write("Enter dice rolls: ");
+
+                // This is Linq.  Linq can make your life pretty easy
+                var nums = Console.ReadLine() // Read a string from the user
+                    .Split(" ") // Split the text input into an array of strings
+                    .Select(n => Convert.ToInt32(n)) // Select each string and convert it to an integer
+                    .ToList(); // Now turn the integer collection into a List
+
+                int[] dice = { nums[0], nums[1], nums[2] };
+                int payout = 0;
+                bool foundMatch = false;
+
+                //this is such a dumb way to do thisssss
+                for (int i = 1; i < dice.Length; i++)
+                {
+                    if (dice[i] == dice[0])
+                    {
+                        payout += dice[0];
+                        foundMatch = true;
+                    }
+                }
+                if (foundMatch) payout += dice[0];
+                else
+                {
+                    if (dice[1] == dice[2])
+                    {
+                        payout += dice[1] * 2;
+                    }
+                }
+                Console.Write($"The payout is ${payout}.");
+                Console.WriteLine();
+                
+            }
             
         }
     }
